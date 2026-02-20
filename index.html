@@ -661,15 +661,15 @@
   }  // ===== MODO PÚBLICO (somente visualização)
   const PUBLIC_MODE = true; // público sempre (somente leitura)
 
-  // No modo público, lê os dados do arquivo data.json (publicado junto do site)
+  // No modo público, lê os dados do arquivo data12h.json (publicado junto do site)
   async function loadFromPublicJSON(){
     try{
-      const res = await fetch('./data.json', { cache: 'no-store' })
+      const res = await fetch('./data12h.json', { cache: 'no-store' })
       if(!res.ok) throw new Error('HTTP '+res.status);
       const d = await res.json();
       state = { players:[], entries:[], payments:[], expenses:[], matches:[], champions:[], lastEntryId:null, ...d };
     }catch(err){
-      console.warn('Não foi possível carregar data.json; usando dados do localStorage deste navegador.', err);
+      console.warn('Não foi possível carregar data12h.json; usando dados do localStorage deste navegador.', err);
     }
   }
 
@@ -1815,9 +1815,9 @@ champPick.onchange = ()=>{};
  
  (async function init(){
 
-  // 1) Carrega data.json primeiro (pra state ter 2025/2026 etc.)
+  // 1) Carrega data12h.json primeiro (pra state ter 2025/2026 etc.)
   if(location.protocol === 'file:'){
-    console.warn('Abra via servidor (GitHub Pages) para carregar data.json automaticamente.');
+    console.warn('Abra via servidor (GitHub Pages) para carregar data12h.json automaticamente.');
   } else {
     await loadFromPublicJSON();
   }
@@ -1834,7 +1834,7 @@ champPick.onchange = ()=>{};
   fillMonthYearSelect(courtMonth, courtYear);
   fillMonthYearSelect(otherMonth, otherYear);
 
-  // Ranking anos (agora vem do data.json)
+  // Ranking anos (agora vem do data12h.json)
   const years = new Set(Array.from($id('histScoreYear').options).map(o=>Number(o.value)));
   const yopts = validYearsFromSet(years).map(y=>`<option value="${y}">${y}</option>`).join('');
   rankMonth.innerHTML = histScoreMonth.innerHTML;
